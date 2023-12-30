@@ -1,0 +1,16 @@
+.img_header {
+    margin-top: 10px;
+    margin-left: 600px;
+}
+.header_menu {
+    margin-top: 10px;
+}
+
+.login_signup {
+    margin-left: 1320px;
+    width: 110px;
+}
+a:hover {
+    color: black;
+    text-decoration: none;
+}

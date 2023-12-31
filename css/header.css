@@ -6,9 +6,8 @@
     margin-top: 10px;
 }
 
-.login_signup {
-    margin-left: 1320px;
-    width: 110px;
+.login_signin_menu {
+    margin-left: 1380px;
 }
 a:hover {
     color: black;

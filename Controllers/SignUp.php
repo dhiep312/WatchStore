@@ -41,41 +41,41 @@ include_once ('../Model/Database.php')
                 }
                 elseif (empty($_POST['email'])) {
                     echo "<p class=".htmlspecialchars('text-danger').">Retyped your email please</p> ";
-                }
-                else {
-
+                }else {
+                    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
                     $username = filter_var($_POST['username'], FILTER_SANITIZE_SPECIAL_CHARS);
                     $password = $_POST['password'];
                     $hashed_password = password_hash($password,PASSWORD_DEFAULT);
                     $retyped_password = $_POST['password_retyped'];
                     $fullname = $_POST['fullname'];
-                    $email = $_POST['email'];
                     if($password != $retyped_password) {
                         echo "<p class=".htmlspecialchars('text-danger').">Password is not match</p> ";
                     }else {
-                        if(preg_match('/^[a-zA-Z0-9]{50,}$/', $username)) { // for english chars + numbers only
-                            // valid username, alphanumeric & longer than or equals 5 chars
-                            echo "<p class=".htmlspecialchars('text-danger').">Your username is invalid</p> ";
+                        if(!filter_var($email,FILTER_VALIDATE_EMAIL) || !preg_match('/@gmail\.com$/', $email)) {
+                            echo "<p class=".htmlspecialchars('text-danger').">Your email is invalid</p> ";
                         }else {
-
-                            $sql = "select username from tbl_user where username  = '$username'";
+                            $email = mysqli_real_escape_string($conn, $_POST['email']);
+                            $sql = "select email from tbl_user where email = '$email'";
                             $result = $conn ->query($sql);
                             if ($result->num_rows == 0) {
                                 $sql = "insert into tbl_user(username,userpassword,fullname,email) values('$username','$hashed_password','$fullname','$email')";
                                 $result = $conn ->query($sql);
                                 if ($result === TRUE) {
-                                    echo "<p class=".htmlspecialchars('text-success').">Signed up succesfully</p> ";
+                                    echo "<p class=".htmlspecialchars('text-success').">Signed up succesfully</p> "; {
+                                        header('Location:../View/home.php');
+                                    }
                                 }
                                 else {
                                     echo "<p class=".htmlspecialchars('text-danger').">Error</p> ";
                                 }
                             }
                             else {
-                                echo "<p class=".htmlspecialchars('text-danger').">Username you typed in already existed</p> ";
+                                echo "<p class=".htmlspecialchars('text-danger').">Email you typed in already existed</p> ";
                             }
                         }
                     }
                 }
+
             }
             ?>
             <label for="">Username:</label> <br>

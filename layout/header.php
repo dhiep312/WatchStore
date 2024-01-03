@@ -25,6 +25,7 @@
             <i class="fa-solid fa-user"></i>
         </button>
         <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="../View/user.php">Account</a></li>
             <li><a class="dropdown-item" href="../Controllers/Login.php">Login</a></li>
             <li><a class="dropdown-item" href="../Controllers/SignUp.php">SignUp</a></li>
         </ul>

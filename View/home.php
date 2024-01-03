@@ -1,5 +1,6 @@
 <?php
 include_once('../layout/header.php');
+include_once ('../Model/Database.php');
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,3 +28,4 @@ include_once('../layout/header.php');
 </div>
 </body>
 </html>
+

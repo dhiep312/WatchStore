@@ -78,3 +78,5 @@ include_once ('../Model/Database.php')
         </div>
     </div>
 </div>
+<?php $conn->close();?>
+

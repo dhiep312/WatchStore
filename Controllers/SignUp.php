@@ -62,7 +62,6 @@ include_once ('../Model/Database.php')
                                 $result = $conn ->query($sql);
                                 if ($result === TRUE) {
                                     echo "<p class=".htmlspecialchars('text-success').">Signed up succesfully</p> "; {
-                                        header('Location:../View/home.php');
                                     }
                                 }
                                 else {

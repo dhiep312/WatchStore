@@ -1,21 +1,27 @@
 <?php
-include_once('layout/headerAdmin.php');
 include_once ('Model/Database.php');
 ?>
 <?php
 $sql = "select * from tbl_user;";
 $result = mysqli_query($conn,$sql);
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin</title>
-</head>
-<body>
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Admin</title>
+        <link rel="stylesheet" href="css/Admin.css">
+        <script src="https://kit.fontawesome.com/623c50a3c8.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+    <h1>Admin page <a href="View/home.php">Home</a></h1>
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Danh Sách Người Dùng <i class="fa-solid fa-user-group"></i></button>
@@ -30,7 +36,6 @@ $result = mysqli_query($conn,$sql);
             <section>
                 <div class="col-12">
                     <div class="card">
-                        <!-- /.card-header -->
                         <div class="card-body">
                             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
@@ -69,9 +74,9 @@ $result = mysqli_query($conn,$sql);
                                                     $update_user = "UPDATE tbl_user SET user_id = user_id - 1 where user_id > ".$user_id;
                                                     $reorder_user = mysqli_multi_query($conn, $update_user);
                                                     if ($reorder_user) {
-                                                        echo 'Order of user_id updated successfully.';
+                                                        echo 'Add user successfully.';
                                                     } else {
-                                                        echo 'Error updating order of user_id: ' . mysqli_error($conn);
+                                                        echo 'Error Add user: ' . mysqli_error($conn);
                                                     }
                                                 }
                                                 else {
@@ -113,19 +118,91 @@ $result = mysqli_query($conn,$sql);
                                                 <th style="text-align: center;" class="sorting_asc" tabindex="0"  rowspan="1" colspan="1">ID</th>
                                                 <th style="text-align: center;" class="sorting" tabindex="0"  rowspan="1" colspan="1">Tên Người Dùng</th>
                                                 <th style="text-align: center;" class="sorting" tabindex="0"  rowspan="1" colspan="1">Mật khẩu</th>
+                                                <th style="text-align: center;" class="sorting" tabindex="0"  rowspan="1" colspan="1">Nhập lại Mật khẩu</th>
                                                 <th style="text-align: center;" class="sorting" tabindex="0"  rowspan="1" colspan="1">Full Name</th>
                                                 <th style="text-align: center;" class="sorting" tabindex="0"  rowspan="1" colspan="1">Email</th>
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
+                                                <?php
+
+                                                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                                                    if (empty($_POST['username'])) {
+                                                        echo "<p class=".htmlspecialchars('text-danger').">Please enter your username</p> ";
+                                                    }elseif (empty($_POST['user_id'])){
+                                                        echo "<p class=".htmlspecialchars('text-danger').">Please enter your ID</p> ";
+                                                    }
+                                                    elseif (empty($_POST['password'])) {
+                                                        echo "<p class=".htmlspecialchars('text-danger').">Please enter your new password</p> ";
+                                                    }
+                                                    elseif (empty($_POST['password_retyped'])) {
+                                                        echo "<p class=".htmlspecialchars('text-danger').">Retyped your password please</p> ";
+                                                    }
+                                                    elseif (empty($_POST['fullname'])) {
+                                                        echo "<p class=".htmlspecialchars('text-danger').">Retyped your full name please</p> ";
+                                                    }
+                                                    elseif (empty($_POST['email'])) {
+                                                        echo "<p class=".htmlspecialchars('text-danger').">Retyped your email please</p> ";
+                                                    }else {
+                                                        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+                                                        $username = filter_var($_POST['username'], FILTER_SANITIZE_SPECIAL_CHARS);
+                                                        $user_id = $_POST['user_id'];
+                                                        $password = $_POST['password'];
+                                                        $hashed_password = password_hash($password,PASSWORD_DEFAULT);
+                                                        $retyped_password = $_POST['password_retyped'];
+                                                        $fullname = $_POST['fullname'];
+                                                        if($password != $retyped_password) {
+                                                            echo "<p class=".htmlspecialchars('text-danger').">Password is not match</p> ";
+                                                        }else {
+                                                            if(!filter_var($email,FILTER_VALIDATE_EMAIL) || !preg_match('/@gmail\.com$/', $email)) {
+                                                                echo "<p class=".htmlspecialchars('text-danger').">Your email is invalid</p> ";
+                                                            }else {
+                                                                $email = mysqli_real_escape_string($conn, $_POST['email']);
+                                                                $sql = "select email from tbl_user where email = '$email'";
+                                                                $result = $conn ->query($sql);
+                                                                if ($result->num_rows == 0) {
+                                                                    $sql = "insert into tbl_user(user_id,username,userpassword,fullname,email) values('$user_id','$username','$hashed_password','$fullname','$email')";
+                                                                    $result = $conn ->query($sql);
+                                                                    if ($result === TRUE) {
+                                                                        echo "<p class=".htmlspecialchars('text-success').">Add succesfully</p> "; {
+                                                                        }
+                                                                    }
+                                                                    else {
+                                                                        echo "<p class=".htmlspecialchars('text-danger').">Error</p> ";
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    echo "<p class=".htmlspecialchars('text-danger').">Email you typed in already existed</p> ";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                                ?>
                                             <tr>
-                                                <td><input type="text" placeholder="ID"></td>
-                                                <td><input type="text" placeholder="Tên Người Dùng"></td>
-                                                <td><input type="text" placeholder="Mật Khẩu"></td>
-                                                <td><input type="text" placeholder="Full Name"></td>
-                                                <td><input type="text" placeholder="Email"></td>
-                                                <td><button type="button" class="btn btn-outline-primary" onclick="add_user()">Add</button></td>
+                                                <td>
+                                                    <input type="text" name="user_id" placeholder="ID">
+                                                </td>
+                                                <td>
+                                                    <input type="text"  name="username" placeholder="Username">
+                                                </td>
+                                                <td>
+                                                    <input type="password" name="password" placeholder="Password">
+                                                </td>
+                                                <td>
+                                                    <input type="password" name="password_retyped" placeholder="RePassword">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="fullname" placeholder="Full name">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="email" placeholder="Email">
+                                                </td>
+                                                <td><button type="submit" class="btn btn-outline-primary">Add</button></td>
                                             </tr>
+                                            </form>
                                             </tbody>
                                         </table>
                                     </div>

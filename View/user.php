@@ -1,9 +1,10 @@
 <?php
 include_once ('../layout/header.php');
 ?>
+
 <?php
 include_once ('../Model/Database.php');
-if ($_SESSION['username'] == '') {
+if ($_SESSION['username'] == null) {
 ?>
     <script>
         alert("Please log in to view your account");

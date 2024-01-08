@@ -27,7 +27,7 @@ include_once ('../layout/header.php');
 
                         $result = mysqli_query($conn,$sql);
                         if ($email == 'admin@gmail.com' && $username == 'admin' && $password == 'admin') {
-                            header('Location:../Index.php');
+                            header('Location: ../Admin/ManagementUser.php');
                         }
                         elseif ($result->num_rows == 1) {
                             $row = $result->fetch_assoc();
@@ -39,7 +39,7 @@ include_once ('../layout/header.php');
                                 $_SESSION['username'] = $username;
                                 $_SESSION['email'] = $email;
                                 echo $_SESSION['username'];
-//                                header("Location:../View/home.php");
+                                header("Location:../View/home.php");
                             }
                         }else {
                             if(!filter_var($email,FILTER_VALIDATE_EMAIL) || !preg_match('/@gmail\.com$/', $email)) {

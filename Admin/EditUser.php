@@ -1,11 +1,9 @@
 <?php
-include_once ('../layout/header.php');
+include_once ('../layout/HeaderAdmin.php');
 ?>
 <?php
 include_once ('../Model/Database.php');
 ?>
-
-
 
 <!doctype html>
 <html lang="en">
@@ -18,17 +16,19 @@ include_once ('../Model/Database.php');
 </head>
 <body>
 <H1>Admin</H1>
-<h1><a href="../View/home.php">Home</a></h1>
+<h1><a href="../View/index.php">Home</a></h1>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">
-            <a href="../Admin/ManagementUser.php">Danh Sách Người Dùng</a></button>
+        <a href="../Admin/ManagementUser.php"><button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Danh Sách Người Dùng</button></a>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link " data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"><a href="../Admin/AddUser.php">Thêm Người Dùng</a></button>
+        <a href="../Admin/AddUser.php"><button class="nav-link " data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Thêm Người Dùng</button></a>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">Sửa Người Dùng </button>
+        <a href=""><button class="nav-link " data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Sửa Người Dùng</button></a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a href="../Admin/ManagementProduct.php"><button class="nav-link " data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Quản Lí Sản Phẩm</button></a>
     </li>
 </ul>
 <div class="EditUser">
@@ -45,7 +45,7 @@ include_once ('../Model/Database.php');
                             <table  class="table table-bordered table-hover dataTable" role="grid" >
                                 <thead>
                                 <tr role="row">
-<!--                                    <th style="text-align: center;" class="sorting_asc" tabindex="0"  rowspan="1" colspan="1">ID</th>-->
+                                    <th style="text-align: center;" class="sorting_asc" tabindex="0"  rowspan="1" colspan="1">ID</th>
                                     <th style="text-align: center;" class="sorting" tabindex="0"  rowspan="1" colspan="1">Tên Người Dùng</th>
 <!--                                    <th style="text-align: center;" class="sorting" tabindex="0"  rowspan="1" colspan="1">Mật khẩu</th>-->
 <!--                                    <th style="text-align: center;" class="sorting" tabindex="0"  rowspan="1" colspan="1">Nhập lại Mật khẩu</th>-->
@@ -67,9 +67,9 @@ include_once ('../Model/Database.php');
                                         ?>
                                 <form action="" method="post">
                                     <tr>
-<!--                                        <td>-->
-<!--                                            <input type="text" name="user_id" placeholder="ID" value="--><?//=$user['user_id'];?><!--" class="form-control">-->
-<!--                                        </td>-->
+                                        <td>
+                                            <input type="text" name="user_id" placeholder="ID" value="<?=$user['user_id'];?>" class="form-control">
+                                        </td>
                                         <td>
                                             <input type="text"  name="username" placeholder="Username" value="<?=$user['username'];?>" class="form-control">
                                         </td>

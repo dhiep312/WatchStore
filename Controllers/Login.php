@@ -39,7 +39,7 @@ include_once ('../layout/header.php');
                                 $_SESSION['username'] = $username;
                                 $_SESSION['email'] = $email;
                                 echo $_SESSION['username'];
-                                header("Location:../View/home.php");
+                                header("Location:../View/index.php");
                             }
                         }else {
                             if(!filter_var($email,FILTER_VALIDATE_EMAIL) || !preg_match('/@gmail\.com$/', $email)) {

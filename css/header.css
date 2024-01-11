@@ -1,3 +1,7 @@
+a:hover {
+    color: black;
+    text-decoration: none;
+}
 .img_header {
     margin-top: 10px;
     margin-left: 600px;
@@ -9,7 +13,9 @@
 .login_signin_menu {
     margin-left: 1380px;
 }
-a:hover {
-    color: black;
-    text-decoration: none;
+#form_signup {
+    margin-left: 20px;
+}
+.login_page {
+    margin-left: 20px;
 }

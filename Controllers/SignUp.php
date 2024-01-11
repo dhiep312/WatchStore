@@ -17,7 +17,7 @@ include_once ('../Model/Database.php')
 
 </head>
 <body>
-<a href="../View/home.php"><img class="img_header" src="../Public/logo-watchstore.webp" alt="" width="200px"></a>
+<a href="../View/index.php"><img class="img_header" src="../Public/logo-watchstore.webp" alt="" width="200px"></a>
 
 <div id="form_signup">
     <h1>Sign up</h1>
